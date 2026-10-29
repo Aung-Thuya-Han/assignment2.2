@@ -1,34 +1,41 @@
-import java.util.HashMap;
+import java.util.ArrayList;
 
 public class GroceryListManager {
 
-    private HashMap<String, Double> groceryList = new HashMap<>();
+    private ArrayList<String> groceryList = new ArrayList<>();
+    private ArrayList<Double> itemCosts = new ArrayList<>();
 
     public void addItem(String item, double cost) {
-        groceryList.put(item, cost);
+        groceryList.add(item);
+        itemCosts.add(cost);
     }
 
     public void removeItem(String item) {
-        groceryList.remove(item);
+        int itemIndex = groceryList.indexOf(item);
+
+        if (itemIndex >= 0) {
+            groceryList.remove(itemIndex);
+            itemCosts.remove(itemIndex);
+        }
     }
 
     public void displayList() {
         int itemNumber = 1;
 
-        for (String item : groceryList.keySet()) {
+        for (String item : groceryList) {
             System.out.println(itemNumber + ". " + item);
             itemNumber++;
         }
     }
 
     public boolean checkItem(String item) {
-        return groceryList.containsKey(item);
+        return groceryList.contains(item);
     }
 
     public double calculateTotalCost() {
         double totalCost = 0;
 
-        for (double cost : groceryList.values()) {
+        for (double cost : itemCosts) {
             totalCost = totalCost + cost;
         }
 

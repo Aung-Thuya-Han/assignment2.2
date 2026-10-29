@@ -1,37 +1,44 @@
-import java.util.HashMap;
+import java.util.ArrayList;
 
 public class GroceryListManager {
 
-    private HashMap<String, Double> groceryList = new HashMap<>();
-    private HashMap<String, String> itemCategories = new HashMap<>();
+    private ArrayList<String> groceryList = new ArrayList<>();
+    private ArrayList<Double> itemCosts = new ArrayList<>();
+    private ArrayList<String> itemCategories = new ArrayList<>();
 
     public void addItem(String item, double cost, String category) {
-        groceryList.put(item, cost);
-        itemCategories.put(item, category);
+        groceryList.add(item);
+        itemCosts.add(cost);
+        itemCategories.add(category);
     }
 
     public void removeItem(String item) {
-        groceryList.remove(item);
-        itemCategories.remove(item);
+        int itemIndex = groceryList.indexOf(item);
+
+        if (itemIndex >= 0) {
+            groceryList.remove(itemIndex);
+            itemCosts.remove(itemIndex);
+            itemCategories.remove(itemIndex);
+        }
     }
 
     public void displayList() {
         int itemNumber = 1;
 
-        for (String item : groceryList.keySet()) {
+        for (String item : groceryList) {
             System.out.println(itemNumber + ". " + item);
             itemNumber++;
         }
     }
 
     public boolean checkItem(String item) {
-        return groceryList.containsKey(item);
+        return groceryList.contains(item);
     }
 
     public double calculateTotalCost() {
         double totalCost = 0;
 
-        for (double cost : groceryList.values()) {
+        for (double cost : itemCosts) {
             totalCost = totalCost + cost;
         }
 
@@ -41,9 +48,9 @@ public class GroceryListManager {
     public void displayByCategory(String category) {
         System.out.println(category + ":");
 
-        for (String item : itemCategories.keySet()) {
-            if (itemCategories.get(item).equals(category)) {
-                System.out.println(item);
+        for (int i = 0; i < groceryList.size(); i++) {
+            if (itemCategories.get(i).equals(category)) {
+                System.out.println(groceryList.get(i));
             }
         }
     }
